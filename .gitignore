@@ -28,6 +28,7 @@ env/
 RELEASE_TODO.md
 readme_lp.md
 HF_MODEL_CARD_DRAFT.md
+README_page.md
 
 # Runtime outputs
 tmp/

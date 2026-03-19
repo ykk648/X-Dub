@@ -49,7 +49,7 @@ https://github.com/user-attachments/assets/5b2d3fab-0de8-4682-9b95-36c11dfae3f5
 
 This repository contains the official PyTorch implementation of **X-Dub**, introduced in [*From Inpainting to Editing: Unlocking Robust Mask-Free Visual Dubbing via Generative Bootstrapping*](https://arxiv.org/abs/2512.25066) (formerly *From Inpainting to Editing: A Self-Bootstrapping Framework for Context-Rich Visual Dubbing*).
 
-Due to company policy, we cannot open-source the internal model used in the paper. This repository instead releases a migrated public X-Dub (Wan-5B) version based on Wan2.2-TI2V-5B. In our extensive experiments, X-Dub (Wan-5B) can also generate satisfying lip-synced results broadly aligned with the internal version X-Dub (internal-1B):
+Due to company policy, we cannot open-source the internal model used in the paper. This repository instead releases a migrated public X-Dub (Wan-5B) version based on Wan2.2-TI2V-5B. Due to the different backbone characteristics, we do not use the LoRA tuning described in the paper. Instead, we adopt SFT in the multi-phase tuning for the public Wan-based release to achieve a similar effect. In our extensive experiments, X-Dub (Wan-5B) can also generate satisfying lip-synced results broadly aligned with the internal version X-Dub (internal-1B):
 
 <details>
 <summary>More qualitative results of X-Dub (Wan-5B)</summary>
