@@ -30,9 +30,11 @@ class Wholebody:
                  pose_config=None, pose_ckpt=None,
                 det_onnx=None, pose_onnx=None, \
                 det_trt=None, pose_trt=None, \
-                device="cpu", type='pt', cuda_stream=torch.cuda.current_stream()):
+                device="cpu", type='pt', cuda_stream=None):
         self.is_rtmw = True        
         self.type = type
+        if cuda_stream is None and str(device).startswith("cuda") and torch.cuda.is_available():
+            cuda_stream = torch.cuda.current_stream()
         self.cuda_stream = cuda_stream
         if self.type not in ("pt", "pth"):
             raise NotImplementedError("Current local lip-sync preprocessing only supports the PyTorch DWpose path.")

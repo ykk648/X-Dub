@@ -98,42 +98,45 @@ https://github.com/user-attachments/assets/f9c0a303-135a-4261-8000-ea263ea41dd5
 ```bash
 git clone https://github.com/KlingAIResearch/X-Dub.git
 cd X-Dub
-
-conda create -n x-dub python=3.10 -y
-conda activate x-dub
 ```
 
-Install Python dependencies:
+This repository now ships a `uv` configuration for the main CUDA inference path. The default setup targets:
+
+- Python `3.10.x`
+- CUDA `12.8`
+- PyTorch CUDA wheels from `https://download.pytorch.org/whl/cu128`
+
+Sync the environment:
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
-Install OpenMMLab dependencies:
+If package downloads are slow, retry with a longer timeout and your shell proxy variables:
 
 ```bash
-pip install chumpy==0.70 --no-build-isolation
-pip install mmengine==0.10.7
-pip install mmcv==2.1.0 --no-build-isolation
-pip install mmdet==3.2.0
-pip install mmpose==1.3.2
+UV_HTTP_TIMEOUT=300 uv sync
 ```
 
-Install this repository (adapted from [DiffSynth-Studio](https://github.com/modelscope/DiffSynth-Studio)):
+`ffmpeg` is still required as a system executable because the preprocessing and muxing steps call the CLI directly.
+
+Optional attention acceleration backends are intentionally not locked into the base environment because their version compatibility is more fragile than the main inference stack.
+
+If you want to try FlashAttention after the base environment works, install it separately:
 
 ```bash
-pip install -e . --no-deps
+uv pip install flash-attn==2.8.3 --no-build-isolation
 ```
-
 
 ### 2. 📥 Download pretrained weights
 
 Download the released bundle directly to `checkpoints/`:
 
 ```bash
-pip install -U "huggingface_hub[cli]"
-hf download KlingTeam/X-Dub --local-dir ./checkpoints --repo-type model
+uv run hf download KlingTeam/X-Dub --local-dir ./checkpoints --repo-type model
 ```
+
+If the Hugging Face download path is slow in your environment, add proxy variables to this command only instead of using them for the whole `uv sync`.
 
 Move the DWpose files into `dwpose_tools/models/`:
 
